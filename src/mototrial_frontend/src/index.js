@@ -3,17 +3,31 @@ import { mototrial_backend } from "../../declarations/mototrial_backend";
 document.querySelector("form").addEventListener("submit", async (e) => {
   e.preventDefault();
   const button = e.target.querySelector("button");
+  if(button.name == "SetName")
+  {
+    const name = document.getElementById("name").value.toString();
 
-  const name = document.getElementById("name").value.toString();
+    button.setAttribute("disabled", true);
 
-  button.setAttribute("disabled", true);
+    // Interact with foo actor, calling the greet method
+    const greeting = await mototrial_backend.greet(name);
 
-  // Interact with foo actor, calling the greet method
-  const greeting = await mototrial_backend.sayName(name);
+    button.removeAttribute("disabled");
 
-  button.removeAttribute("disabled");
+    document.getElementById("greeting").innerText = greeting;
+  }
+  else if(button.name == "GetName")
+  {
+    const name = document.getElementById("name").value.toString();
 
-  document.getElementById("greeting").innerText = greeting;
+    button.setAttribute("disabled", true);
 
-  return false;
+    // Interact with foo actor, calling the greet method
+    const greeting = await mototrial_backend.getName();
+
+    button.removeAttribute("disabled");
+
+    document.getElementById("greeting").innerText = greeting;
+  }
+return false;
 });
